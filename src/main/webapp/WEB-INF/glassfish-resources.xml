@@ -10,6 +10,5 @@
         <property name="URL" value="jdbc:sqlserver://pleitez.ddns.net:1433;databaseName=RecordsFilms"/>
         <property name="driverClass" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
     </jdbc-connection-pool>
-    <jdbc-resource enabled="true" jndi-name="java:app/mssql" object-type="user" pool-name="microsoft_sql_RecordsFilms_saPool"/>
-    <jdbc-resource enabled="true" jndi-name="java:app/central-db" object-type="user" pool-name="microsoft_sql_RecordsFilms_saPool"/>
+    <jdbc-resource enabled="true" jndi-name="java:app/db-remota" object-type="user" pool-name="microsoft_sql_RecordsFilms_saPool"/>
 </resources>
