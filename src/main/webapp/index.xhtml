@@ -11,16 +11,67 @@
     </h:head>
 
     <h:body>
-        Hello from Facelets
-        <p:spinner />
 
         <div class="ui-fluid p-formgrid p-grid">
 
-            <div class="p-field p-col-12 p-md-4">
-                <p:outputLabel value="Pais"/>
-                <p:selectOneMenu id="pais" value="#{selectOneMenuView.labeled}" label="Pais" alwaysDisplayLabel="true">
-                    <f:selectItems value="#{selectOneMenuView.cities}"/>
+            <div class="p-field p-col-12 p-md-12 p-mx-6">
+                <h1>Administrar Clientes</h1>                
+            </div>
+
+            <div class="p-field p-col-12 p-md-4 p-mx-6">
+                <p:outputLabel value="Nombres"/>
+                <p:inputText id="nombres" value="#{administrarClientesView.tempCliente.nombres}"/>
+            </div>
+            <div class="p-field p-col-12 p-md-8"/>
+            
+            <div class="p-field p-col-12 p-md-4 p-mx-6">
+                <p:outputLabel value="Apellidos"/>
+                <p:inputText id="apellidos" value="#{administrarClientesView.tempCliente.apellidos}"/>
+            </div>
+            <div class="p-field p-col-12 p-md-8"/>
+            
+            <div class="p-field p-col-12 p-md-4 p-mx-6">
+                <p:outputLabel value="Tipo Cliente"/>
+                <p:selectOneMenu id="tipo" value="#{administrarClientesView.selectedPais}" label="Seleccionar Ciudad">
+                    <f:selectItems value="#{administrarClientesView.paises}" var="pais" itemLabel="#{pais.pais}" itemValue="#{pais}"/>
                 </p:selectOneMenu>
+            </div>
+            <div class="p-field p-col-12 p-md-8"/>
+
+            <div class="p-field p-col-12 p-md-4 p-mx-6">
+                <p:outputLabel value="Pais"/>
+                <p:selectOneMenu id="pais" value="#{administrarClientesView.selectedPais}" label="Seleccionar Pais">
+                    <f:selectItems value="#{administrarClientesView.paises}" var="pais" itemLabel="#{pais.pais}" itemValue="#{pais}"/>
+                </p:selectOneMenu>
+            </div>
+            <div class="p-field p-col-12 p-md-8"/>
+            
+            <div class="p-field p-col-12 p-md-4 p-mx-6">
+                <p:outputLabel value="Ciudad"/>
+                <p:selectOneMenu id="ciudad" value="#{administrarClientesView.selectedPais}" label="Seleccionar Ciudad">
+                    <f:selectItems value="#{administrarClientesView.paises}" var="pais" itemLabel="#{pais.pais}" itemValue="#{pais}"/>
+                </p:selectOneMenu>
+            </div>
+            <div class="p-field p-col-12 p-md-8"/>
+            
+            <div class="p-field p-col-12 p-md-4 p-mx-6">
+                <p:outputLabel value="Direccion"/>
+                <p:selectOneMenu id="direccion" value="#{administrarClientesView.selectedPais}" label="Seleccionar Ciudad">
+                    <f:selectItems value="#{administrarClientesView.paises}" var="pais" itemLabel="#{pais.pais}" itemValue="#{pais}"/>
+                </p:selectOneMenu>
+            </div>
+            <div class="p-field p-col-12 p-md-8"/>
+            
+            <div class="p-field p-col-12 p-md-4 p-mx-6">
+                <p:outputLabel value="Tienda"/>
+                <p:selectOneMenu id="tienda" value="#{administrarClientesView.selectedPais}" label="Seleccionar Ciudad">
+                    <f:selectItems value="#{administrarClientesView.paises}" var="pais" itemLabel="#{pais.pais}" itemValue="#{pais}"/>
+                </p:selectOneMenu>
+            </div>
+            <div class="p-field p-col-12 p-md-8"/>
+            
+            <div class="p-field p-col-12 p-md-4 p-mx-6">
+                <p:button value="Registrar Cliente" styleClass="ui-button-secondary" />
             </div>
 
         </div>
