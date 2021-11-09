@@ -5,12 +5,14 @@
  */
 package ues.edu.sv.administrarclientes.appvista;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import ues.edu.sv.administrarclientes.controlador.CiudadFacade;
 import ues.edu.sv.administrarclientes.controlador.ClienteFacade;
 import ues.edu.sv.administrarclientes.controlador.PaisFacade;
 import ues.edu.sv.administrarclientes.controlador.TipoFacade;
@@ -32,6 +34,8 @@ public class AdministrarClientesView {
     // Controladores
     @Inject
     private PaisFacade paisFacade;
+    @Inject
+    private CiudadFacade ciudadFacade;
     @Inject
     private ClienteFacade clienteFacade;
     @Inject
@@ -135,6 +139,8 @@ public class AdministrarClientesView {
     
     public void onRowSelect(){
         System.out.println(tempCliente.getNombres());
+        selectedDireccion = tempCliente.getDireccionId();
+        selectedCiudad = tempCliente.getDireccionId().getCiudadId();
         selectedPais = tempCliente.getDireccionId().getCiudadId().getPaisId();
     }
     
@@ -143,11 +149,19 @@ public class AdministrarClientesView {
     }
     
     public void onPaisSelect(){
-        System.out.println(selectedPais.getPaisId());
+        BigDecimal paisId = selectedPais.getPaisId();
+        // Se verfica que no este null
+        if(paisId != null){
+            selectedPais = paisFacade.find(paisId);
+        }
     }
     
     public void onCiudadSelect(){
-        System.out.println(tempCliente.getTipoList());
+        BigDecimal ciudadId = selectedCiudad.getCiudadId();
+        // Se verfica que no este null
+        if(ciudadId != null){
+            selectedCiudad = ciudadFacade.find(ciudadId);
+        }
     }
     
 }

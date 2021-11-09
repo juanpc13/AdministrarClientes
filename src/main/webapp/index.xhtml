@@ -52,7 +52,7 @@
                             <div class="p-field p-col-12 p-md-12">
                                 <p:outputLabel value="Pais"/>
                                 <p:selectOneMenu id="pais" value="#{administrarClientesView.selectedPais.paisId}" label="Seleccionar Pais">
-                                    <p:ajax event="change" listener="#{administrarClientesView.onPaisSelect}" update="ciudad" />
+                                    <p:ajax event="itemSelect" listener="#{administrarClientesView.onPaisSelect}" update="ciudad" />
                                     <f:selectItems value="#{administrarClientesView.paises}" var="pais" itemLabel="#{pais.pais}" itemValue="#{pais.paisId}"/>
                                 </p:selectOneMenu>
                             </div>
@@ -60,7 +60,7 @@
                             <div class="p-field p-col-12 p-md-12">
                                 <p:outputLabel value="Ciudad"/>
                                 <p:selectOneMenu id="ciudad" value="#{administrarClientesView.selectedCiudad.ciudadId}" label="Seleccionar Ciudad">
-                                    <p:ajax event="change" listener="#{administrarClientesView.onCiudadSelect}" update="direccion" />
+                                    <p:ajax event="itemSelect" listener="#{administrarClientesView.onCiudadSelect()}" update="direccion" />
                                     <f:selectItems value="#{administrarClientesView.selectedPais.ciudadList}" var="ciudad" itemLabel="#{ciudad.ciudad}" itemValue="#{ciudad.ciudadId}"/>
                                 </p:selectOneMenu>
                             </div>
