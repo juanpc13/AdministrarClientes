@@ -14,6 +14,7 @@ import javax.inject.Named;
 import ues.edu.sv.administrarclientes.controlador.ClienteFacade;
 import ues.edu.sv.administrarclientes.controlador.PaisFacade;
 import ues.edu.sv.administrarclientes.controlador.TipoFacade;
+import ues.edu.sv.administrarclientes.entidades.Ciudad;
 import ues.edu.sv.administrarclientes.entidades.Cliente;
 import ues.edu.sv.administrarclientes.entidades.Direccion;
 import ues.edu.sv.administrarclientes.entidades.Pais;
@@ -43,6 +44,8 @@ public class AdministrarClientesView {
     
     // Selecciones de la vista
     private Pais selectedPais;
+    private Ciudad selectedCiudad;
+    private Direccion selectedDireccion;
     
     // Cliente temporal
     private Cliente tempCliente;
@@ -55,23 +58,24 @@ public class AdministrarClientesView {
         tipos = new ArrayList<>();
         clearTempClient();
         
+        // Seleciones se instancias
+        selectedPais = new Pais();
+        selectedCiudad = new Ciudad();
+        selectedDireccion = new Direccion();
+        
         // Cargar las listas
         paises = paisFacade.findAll();
         clientes = clienteFacade.findAll();
         tipos = tipoFacade.findAll();
-        
-        for (Cliente cliente : clientes) {
-            System.out.println(cliente.getNombres());
-        }
     }
     
     public void clearTempClient(){
         tempCliente = new Cliente();
         tempCliente.setTiendaId(new Tienda());
         tempCliente.setDireccionId(new Direccion());
-        //tempCliente.setTipoList(new ArrayList<Tipo>()); //NO SE CREAR AQUI
+        tempCliente.setTipoList(new ArrayList<Tipo>()); //NO SE CREAR AQUI
     }
-
+    
     public List<Pais> getPaises() {
         return paises;
     }
@@ -105,6 +109,22 @@ public class AdministrarClientesView {
         this.selectedPais = selectedPais;
     }
 
+    public Ciudad getSelectedCiudad() {
+        return selectedCiudad;
+    }
+
+    public void setSelectedCiudad(Ciudad selectedCiudad) {
+        this.selectedCiudad = selectedCiudad;
+    }
+
+    public Direccion getSelectedDireccion() {
+        return selectedDireccion;
+    }
+
+    public void setSelectedDireccion(Direccion selectedDireccion) {
+        this.selectedDireccion = selectedDireccion;
+    }
+
     public Cliente getTempCliente() {
         return tempCliente;
     }
@@ -113,12 +133,20 @@ public class AdministrarClientesView {
         this.tempCliente = tempCliente;
     }
     
-    
     public void onRowSelect(){
         System.out.println(tempCliente.getNombres());
+        selectedPais = tempCliente.getDireccionId().getCiudadId().getPaisId();
     }
     
-    public void onItemSelect(){
+    public void onTipoSelect(){
+        System.out.println(tempCliente.getTipoList());
+    }
+    
+    public void onPaisSelect(){
+        System.out.println(selectedPais.getPaisId());
+    }
+    
+    public void onCiudadSelect(){
         System.out.println(tempCliente.getTipoList());
     }
     
