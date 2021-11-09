@@ -170,7 +170,10 @@ public class AdministrarClientesView implements Serializable{
         selectedDireccion = tempCliente.getDireccionId();
         selectedCiudad = tempCliente.getDireccionId().getCiudadId();
         selectedPais = tempCliente.getDireccionId().getCiudadId().getPaisId();
+        // Se cargan las tiendas de esa direccion
+        tiendas = selectedDireccion.getTiendaList();
         selectedTienda = tempCliente.getTiendaId();
+        
     }
     
     public void onTipoSelect(){
@@ -198,6 +201,7 @@ public class AdministrarClientesView implements Serializable{
         // Se verfica que no este null
         if(direccionId != null){
             selectedDireccion = direccionFacade.find(direccionId);
+            tiendas = selectedDireccion.getTiendaList();
         }
     }
     

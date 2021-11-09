@@ -107,7 +107,7 @@
 
                             <p:ajax event="rowSelect" listener="#{administrarClientesView.onRowSelect}" update="datosCliente"/>
 
-                            <p:column headerText="ID">
+                            <p:column headerText="ID" width="10%">
                                 <h:outputText value="#{cliente.clienteId}" />
                             </p:column>
 
@@ -117,6 +117,10 @@
 
                             <p:column headerText="Apellidos">
                                 <h:outputText value="#{cliente.apellidos}" />
+                            </p:column>
+                            
+                            <p:column headerText="Tienda">
+                                <h:outputText value="#{cliente.tiendaId.nombre}" />
                             </p:column>
 
                         </p:dataTable>
