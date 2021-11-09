@@ -14,7 +14,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import ues.edu.sv.administrarclientes.controlador.CiudadFacade;
 import ues.edu.sv.administrarclientes.controlador.ClienteFacade;
+import ues.edu.sv.administrarclientes.controlador.DireccionFacade;
 import ues.edu.sv.administrarclientes.controlador.PaisFacade;
+import ues.edu.sv.administrarclientes.controlador.TiendaFacade;
 import ues.edu.sv.administrarclientes.controlador.TipoFacade;
 import ues.edu.sv.administrarclientes.entidades.Ciudad;
 import ues.edu.sv.administrarclientes.entidades.Cliente;
@@ -37,6 +39,10 @@ public class AdministrarClientesView {
     @Inject
     private CiudadFacade ciudadFacade;
     @Inject
+    private DireccionFacade direccionFacade;
+    @Inject
+    private TiendaFacade tiendaFacade;
+    @Inject
     private ClienteFacade clienteFacade;
     @Inject
     private TipoFacade tipoFacade;
@@ -45,11 +51,13 @@ public class AdministrarClientesView {
     private List<Pais> paises;
     private List<Cliente> clientes;
     private List<Tipo> tipos;
+    private List<Tienda> tiendas;
     
     // Selecciones de la vista
     private Pais selectedPais;
     private Ciudad selectedCiudad;
     private Direccion selectedDireccion;
+    private Tienda selectedTienda;
     
     // Cliente temporal
     private Cliente tempCliente;
@@ -60,17 +68,20 @@ public class AdministrarClientesView {
         paises = new ArrayList<>();
         clientes = new ArrayList<>();
         tipos = new ArrayList<>();
+        tiendas = new ArrayList<>();
         clearTempClient();
         
         // Seleciones se instancias
         selectedPais = new Pais();
         selectedCiudad = new Ciudad();
         selectedDireccion = new Direccion();
+        selectedTienda = new Tienda();
         
         // Cargar las listas
         paises = paisFacade.findAll();
         clientes = clienteFacade.findAll();
         tipos = tipoFacade.findAll();
+        tiendas = tiendaFacade.findAll();
     }
     
     public void clearTempClient(){
@@ -102,6 +113,14 @@ public class AdministrarClientesView {
 
     public void setTipos(List<Tipo> tipos) {
         this.tipos = tipos;
+    }
+
+    public List<Tienda> getTiendas() {
+        return tiendas;
+    }
+
+    public void setTiendas(List<Tienda> tiendas) {
+        this.tiendas = tiendas;
     }
 
     public Pais getSelectedPais() {
@@ -136,12 +155,21 @@ public class AdministrarClientesView {
     public void setTempCliente(Cliente tempCliente) {
         this.tempCliente = tempCliente;
     }
+
+    public Tienda getSelectedTienda() {
+        return selectedTienda;
+    }
+
+    public void setSelectedTienda(Tienda selectedTienda) {
+        this.selectedTienda = selectedTienda;
+    }
     
     public void onRowSelect(){
         System.out.println(tempCliente.getNombres());
         selectedDireccion = tempCliente.getDireccionId();
         selectedCiudad = tempCliente.getDireccionId().getCiudadId();
         selectedPais = tempCliente.getDireccionId().getCiudadId().getPaisId();
+        selectedTienda = tempCliente.getTiendaId();
     }
     
     public void onTipoSelect(){
@@ -161,6 +189,14 @@ public class AdministrarClientesView {
         // Se verfica que no este null
         if(ciudadId != null){
             selectedCiudad = ciudadFacade.find(ciudadId);
+        }
+    }
+    
+    public void onDireccionSelect(){
+        BigDecimal direccionId = selectedDireccion.getDireccionId();
+        // Se verfica que no este null
+        if(direccionId != null){
+            selectedDireccion = direccionFacade.find(direccionId);
         }
     }
     
