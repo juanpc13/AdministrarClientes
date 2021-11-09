@@ -13,11 +13,26 @@
 
     <h:body>
 
-        <h1>Administrar Clientes</h1>
+        <div class="card">
+            <p:tabMenu activeIndex="#{param.i}">
+                <p:menuitem value="Clientes" outcome="index" icon="pi pi-fw pi-home">
+                    <f:param name="i" value="0"/>
+                </p:menuitem>
+                <p:menuitem value="Mantenimiento" outcome="/mantenimiento" icon="pi pi-fw pi-calendar">
+                    <f:param name="i" value="1"/>
+                </p:menuitem>
+                <p:menuitem value="Reporte" outcome="reporte" icon="pi pi-fw pi-pencil">
+                    <f:param name="i" value="2"/>
+                </p:menuitem>
+            </p:tabMenu>
+        </div>
+
+        <h2>Administrar Clientes</h2>
+        
         <div class="p-grid">
 
             <div class="p-col-12 p-md-4">
-                <div class="p-mx-4">
+                <div class="p-mx-3">
                     <h2>Datos del Clientes</h2>
 
                     <div class="ui-fluid p-formgrid p-grid">
@@ -83,7 +98,7 @@
                                     <f:selectItems value="#{administrarClientesView.tiendas}" var="tienda" itemLabel="#{tienda.nombre}" itemValue="#{tienda.tiendaId}"/>
                                 </p:selectOneMenu>
                             </div>
-                            
+
                             <p:commandButton value="Limpiar" styleClass="ui-button-secondary" update="datosCliente" action="#{administrarClientesView.limpiarVista}" />
                             <p:commandButton value="Buscar" styleClass="ui-button-danger" update="datosCliente" action="#{administrarClientesView.buscar}" />
                             <p:commandButton value="Editar" styleClass="ui-button-secondary" update="datosCliente" disabled="#{administrarClientesView.tempCliente.clienteId == null}" action="#{administrarClientesView.editar}" />
@@ -98,7 +113,7 @@
             </div>
 
             <div class="p-col-12 p-md-8">
-                <div class="p-mx-4">
+                <div class="p-mx-3">
                     <h:form style="width: 100%">
                         <h2>Todos Clientes</h2>
                         <p:dataTable var="cliente" value="#{administrarClientesView.clientes}" emptyMessage="Sin Clientes"

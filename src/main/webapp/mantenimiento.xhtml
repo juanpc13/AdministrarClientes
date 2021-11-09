@@ -10,6 +10,21 @@
     </h:head>
 
     <h:body>
+        
+        <div class="card">
+            <p:tabMenu activeIndex="#{param.i}">
+                <p:menuitem value="Clientes" outcome="index" icon="pi pi-fw pi-home">
+                    <f:param name="i" value="0"/>
+                </p:menuitem>
+                <p:menuitem value="Mantenimiento" outcome="/mantenimiento" icon="pi pi-fw pi-calendar">
+                    <f:param name="i" value="1"/>
+                </p:menuitem>
+                <p:menuitem value="Reporte" outcome="reporte" icon="pi pi-fw pi-pencil">
+                    <f:param name="i" value="2"/>
+                </p:menuitem>
+            </p:tabMenu>
+        </div>
+        
         Hello from Facelets
         <p:spinner />
     </h:body>
