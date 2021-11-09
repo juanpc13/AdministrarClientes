@@ -5,11 +5,12 @@
  */
 package ues.edu.sv.administrarclientes.appvista;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import ues.edu.sv.administrarclientes.controlador.CiudadFacade;
@@ -30,8 +31,8 @@ import ues.edu.sv.administrarclientes.entidades.Tipo;
  * @author Juan
  */
 @Named
-@RequestScoped
-public class AdministrarClientesView {
+@ViewScoped
+public class AdministrarClientesView implements Serializable{
     
     // Controladores
     @Inject

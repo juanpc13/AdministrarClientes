@@ -51,31 +51,35 @@
 
                             <div class="p-field p-col-12 p-md-12">
                                 <p:outputLabel value="Pais"/>
-                                <p:selectOneMenu id="pais" value="#{administrarClientesView.selectedPais.paisId}" label="Seleccionar Pais">
-                                    <p:ajax event="change" listener="#{administrarClientesView.onPaisSelect}" update="ciudad" />
+                                <p:selectOneMenu id="pais" value="#{administrarClientesView.selectedPais.paisId}">
+                                    <p:ajax event="itemSelect" listener="#{administrarClientesView.onPaisSelect}" update="ciudad" />
+                                    <f:selectItem itemLabel="Seleccionar Pais" itemValue="" noSelectionOption="true"/>
                                     <f:selectItems value="#{administrarClientesView.paises}" var="pais" itemLabel="#{pais.pais}" itemValue="#{pais.paisId}"/>
                                 </p:selectOneMenu>
                             </div>
 
                             <div class="p-field p-col-12 p-md-12">
                                 <p:outputLabel value="Ciudad"/>
-                                <p:selectOneMenu id="ciudad" value="#{administrarClientesView.selectedCiudad.ciudadId}" label="Seleccionar Ciudad">
-                                    <p:ajax event="change" listener="#{administrarClientesView.onCiudadSelect}" update="direccion" />
+                                <p:selectOneMenu id="ciudad" value="#{administrarClientesView.selectedCiudad.ciudadId}">
+                                    <p:ajax event="itemSelect" listener="#{administrarClientesView.onCiudadSelect}" update="direccion" />
+                                    <f:selectItem itemLabel="Seleccionar Ciudad" itemValue="" noSelectionOption="true"/>
                                     <f:selectItems value="#{administrarClientesView.selectedPais.ciudadList}" var="ciudad" itemLabel="#{ciudad.ciudad}" itemValue="#{ciudad.ciudadId}"/>
                                 </p:selectOneMenu>
                             </div>
 
                             <div class="p-field p-col-12 p-md-12">
                                 <p:outputLabel value="Direccion"/>
-                                <p:selectOneMenu id="direccion" value="#{administrarClientesView.selectedDireccion.direccionId}" label="Seleccionar Direccion">
-                                    <p:ajax event="change" listener="#{administrarClientesView.onDireccionSelect}" update="direccion" />
+                                <p:selectOneMenu id="direccion" value="#{administrarClientesView.selectedDireccion.direccionId}">
+                                    <p:ajax event="itemSelect" listener="#{administrarClientesView.onDireccionSelect}" update="tienda" />
+                                    <f:selectItem itemLabel="Seleccionar Direccion" itemValue="" noSelectionOption="true"/>
                                     <f:selectItems value="#{administrarClientesView.selectedCiudad.direccionList}" var="direccion" itemLabel="#{direccion.direccion}" itemValue="#{direccion.direccionId}"/>
                                 </p:selectOneMenu>
                             </div>
 
                             <div class="p-field p-col-12 p-md-12">
                                 <p:outputLabel value="Tienda"/>
-                                <p:selectOneMenu id="tienda" value="#{administrarClientesView.selectedTienda.tiendaId}" label="Seleccionar Tienda">
+                                <p:selectOneMenu id="tienda" value="#{administrarClientesView.selectedTienda.tiendaId}">
+                                    <f:selectItem itemLabel="Seleccionar Tienda" itemValue="" noSelectionOption="true"/>
                                     <f:selectItems value="#{administrarClientesView.tiendas}" var="tienda" itemLabel="#{tienda.nombre}" itemValue="#{tienda.tiendaId}"/>
                                 </p:selectOneMenu>
                             </div>
