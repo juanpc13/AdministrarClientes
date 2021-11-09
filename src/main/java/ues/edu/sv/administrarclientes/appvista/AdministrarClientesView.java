@@ -29,6 +29,7 @@ public class AdministrarClientesView {
     
     // Listas de los datos
     private List<Pais> paises;
+    private List<Cliente> clientes;
     
     // Selecciones de la vista
     private Pais selectedPais;
@@ -51,6 +52,14 @@ public class AdministrarClientesView {
 
     public void setPaises(List<Pais> paises) {
         this.paises = paises;
+    }
+
+    public List<Cliente> getClientes() {
+        return clientes;
+    }
+
+    public void setClientes(List<Cliente> clientes) {
+        this.clientes = clientes;
     }
 
     public Pais getSelectedPais() {

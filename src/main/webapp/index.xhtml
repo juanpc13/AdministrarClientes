@@ -8,73 +8,98 @@
     <h:head>
         <title>Administrar Clientes</title>
         <link rel="stylesheet" href="css/primeflex.min.css" />
+        <link rel="stylesheet" href="css/custom.css" />
     </h:head>
 
     <h:body>
 
-        <div class="ui-fluid p-formgrid p-grid">
+        <h1>Administrar Clientes</h1>
+        <div class="p-grid">
 
-            <div class="p-field p-col-12 p-md-12 p-mx-6">
-                <h1>Administrar Clientes</h1>                
+            <div class="p-col-12 p-md-4">
+                <div class="p-mx-4">
+                    <h2>Datos del Clientes</h2>
+
+                    <div class="ui-fluid p-formgrid p-grid">
+
+                        <div class="p-field p-col-12 p-md-12">
+
+                            <p:outputLabel value="Nombres"/>
+                            <p:inputText id="nombres" value="#{administrarClientesView.tempCliente.nombres}"/>
+                        </div>
+
+                        <div class="p-field p-col-12 p-md-12">
+                            <p:outputLabel value="Apellidos"/>
+                            <p:inputText id="apellidos" value="#{administrarClientesView.tempCliente.apellidos}"/>
+                        </div>
+
+                        <div class="p-field p-col-12 p-md-12">
+                            <p:outputLabel value="Tipo Cliente"/>
+                            <p:selectOneMenu id="tipo" value="#{administrarClientesView.selectedPais}" label="Seleccionar Ciudad">
+                                <f:selectItems value="#{administrarClientesView.paises}" var="pais" itemLabel="#{pais.pais}" itemValue="#{pais}"/>
+                            </p:selectOneMenu>
+                        </div>
+
+                        <div class="p-field p-col-12 p-md-12">
+                            <p:outputLabel value="Pais"/>
+                            <p:selectOneMenu id="pais" value="#{administrarClientesView.selectedPais}" label="Seleccionar Pais">
+                                <f:selectItems value="#{administrarClientesView.paises}" var="pais" itemLabel="#{pais.pais}" itemValue="#{pais}"/>
+                            </p:selectOneMenu>
+                        </div>
+
+                        <div class="p-field p-col-12 p-md-12">
+                            <p:outputLabel value="Ciudad"/>
+                            <p:selectOneMenu id="ciudad" value="#{administrarClientesView.selectedPais}" label="Seleccionar Ciudad">
+                                <f:selectItems value="#{administrarClientesView.paises}" var="pais" itemLabel="#{pais.pais}" itemValue="#{pais}"/>
+                            </p:selectOneMenu>
+                        </div>
+
+                        <div class="p-field p-col-12 p-md-12">
+                            <p:outputLabel value="Direccion"/>
+                            <p:selectOneMenu id="direccion" value="#{administrarClientesView.selectedPais}" label="Seleccionar Ciudad">
+                                <f:selectItems value="#{administrarClientesView.paises}" var="pais" itemLabel="#{pais.pais}" itemValue="#{pais}"/>
+                            </p:selectOneMenu>
+                        </div>
+
+                        <div class="p-field p-col-12 p-md-12">
+                            <p:outputLabel value="Tienda"/>
+                            <p:selectOneMenu id="tienda" value="#{administrarClientesView.selectedPais}" label="Seleccionar Ciudad">
+                                <f:selectItems value="#{administrarClientesView.paises}" var="pais" itemLabel="#{pais.pais}" itemValue="#{pais}"/>
+                            </p:selectOneMenu>
+                        </div>
+
+                        <div class="p-field p-col-12 p-md-12">
+                            <p:button value="Registrar Cliente" styleClass="ui-button-secondary" />
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
 
-            <div class="p-field p-col-12 p-md-4 p-mx-6">
-                <p:outputLabel value="Nombres"/>
-                <p:inputText id="nombres" value="#{administrarClientesView.tempCliente.nombres}"/>
-            </div>
-            <div class="p-field p-col-12 p-md-8"/>
-            
-            <div class="p-field p-col-12 p-md-4 p-mx-6">
-                <p:outputLabel value="Apellidos"/>
-                <p:inputText id="apellidos" value="#{administrarClientesView.tempCliente.apellidos}"/>
-            </div>
-            <div class="p-field p-col-12 p-md-8"/>
-            
-            <div class="p-field p-col-12 p-md-4 p-mx-6">
-                <p:outputLabel value="Tipo Cliente"/>
-                <p:selectOneMenu id="tipo" value="#{administrarClientesView.selectedPais}" label="Seleccionar Ciudad">
-                    <f:selectItems value="#{administrarClientesView.paises}" var="pais" itemLabel="#{pais.pais}" itemValue="#{pais}"/>
-                </p:selectOneMenu>
-            </div>
-            <div class="p-field p-col-12 p-md-8"/>
+            <div class="p-col-12 p-md-8">
+                <div class="p-mx-4">
+                    <h2>Todos Clientes</h2>
+                        <p:dataTable var="cliente" value="#{administrarClientesView.clientes}" emptyMessage="Sin Clientes">
+                            <p:column headerText="ID">
+                                <h:outputText value="#{cliente.clienteId}" />
+                            </p:column>
 
-            <div class="p-field p-col-12 p-md-4 p-mx-6">
-                <p:outputLabel value="Pais"/>
-                <p:selectOneMenu id="pais" value="#{administrarClientesView.selectedPais}" label="Seleccionar Pais">
-                    <f:selectItems value="#{administrarClientesView.paises}" var="pais" itemLabel="#{pais.pais}" itemValue="#{pais}"/>
-                </p:selectOneMenu>
-            </div>
-            <div class="p-field p-col-12 p-md-8"/>
-            
-            <div class="p-field p-col-12 p-md-4 p-mx-6">
-                <p:outputLabel value="Ciudad"/>
-                <p:selectOneMenu id="ciudad" value="#{administrarClientesView.selectedPais}" label="Seleccionar Ciudad">
-                    <f:selectItems value="#{administrarClientesView.paises}" var="pais" itemLabel="#{pais.pais}" itemValue="#{pais}"/>
-                </p:selectOneMenu>
-            </div>
-            <div class="p-field p-col-12 p-md-8"/>
-            
-            <div class="p-field p-col-12 p-md-4 p-mx-6">
-                <p:outputLabel value="Direccion"/>
-                <p:selectOneMenu id="direccion" value="#{administrarClientesView.selectedPais}" label="Seleccionar Ciudad">
-                    <f:selectItems value="#{administrarClientesView.paises}" var="pais" itemLabel="#{pais.pais}" itemValue="#{pais}"/>
-                </p:selectOneMenu>
-            </div>
-            <div class="p-field p-col-12 p-md-8"/>
-            
-            <div class="p-field p-col-12 p-md-4 p-mx-6">
-                <p:outputLabel value="Tienda"/>
-                <p:selectOneMenu id="tienda" value="#{administrarClientesView.selectedPais}" label="Seleccionar Ciudad">
-                    <f:selectItems value="#{administrarClientesView.paises}" var="pais" itemLabel="#{pais.pais}" itemValue="#{pais}"/>
-                </p:selectOneMenu>
-            </div>
-            <div class="p-field p-col-12 p-md-8"/>
-            
-            <div class="p-field p-col-12 p-md-4 p-mx-6">
-                <p:button value="Registrar Cliente" styleClass="ui-button-secondary" />
+                            <p:column headerText="Nombres">
+                                <h:outputText value="#{cliente.nombres}" />
+                            </p:column>
+
+                            <p:column headerText="Apellidos">
+                                <h:outputText value="#{cliente.apellidos}" />
+                            </p:column>
+                            
+                        </p:dataTable>
+                </div>
             </div>
 
         </div>
+
+
 
     </h:body>
 </html>
