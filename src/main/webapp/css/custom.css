@@ -11,3 +11,7 @@ and open the template in the editor.
     margin-bottom: 1rem;
 }
 
+button.ui-button {
+    margin-right: .5rem;
+}
+

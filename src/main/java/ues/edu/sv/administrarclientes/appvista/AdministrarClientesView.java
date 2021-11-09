@@ -70,13 +70,7 @@ public class AdministrarClientesView implements Serializable{
         clientes = new ArrayList<>();
         tipos = new ArrayList<>();
         tiendas = new ArrayList<>();
-        clearTempClient();
-        
-        // Seleciones se instancias
-        selectedPais = new Pais();
-        selectedCiudad = new Ciudad();
-        selectedDireccion = new Direccion();
-        selectedTienda = new Tienda();
+        limpiarVista();
         
         // Cargar las listas
         paises = paisFacade.findAll();
@@ -85,11 +79,20 @@ public class AdministrarClientesView implements Serializable{
         tiendas = tiendaFacade.findAll();
     }
     
-    public void clearTempClient(){
+    public void clearTempCliente(){
         tempCliente = new Cliente();
         tempCliente.setTiendaId(new Tienda());
         tempCliente.setDireccionId(new Direccion());
         tempCliente.setTipoList(new ArrayList<Tipo>()); //NO SE CREAR AQUI
+    }
+    
+    public void limpiarVista(){
+        clearTempCliente();
+        // Seleciones se instancias
+        selectedPais = new Pais();
+        selectedCiudad = new Ciudad();
+        selectedDireccion = new Direccion();
+        selectedTienda = new Tienda();
     }
     
     public List<Pais> getPaises() {
@@ -203,6 +206,22 @@ public class AdministrarClientesView implements Serializable{
             selectedDireccion = direccionFacade.find(direccionId);
             tiendas = selectedDireccion.getTiendaList();
         }
+    }
+    
+    public void buscar(){
+        System.out.println("Buscando cliente " + tempCliente.getNombres());
+    }
+    
+    public void registrar(){
+        System.out.println("Buscando cliente " + tempCliente.getNombres());
+    }
+    
+    public void eliminar(){
+        System.out.println("Buscando cliente " + tempCliente.getNombres());
+    }
+    
+    public void editar(){
+        System.out.println("Buscando cliente " + tempCliente.getNombres());
     }
     
 }

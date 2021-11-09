@@ -83,13 +83,12 @@
                                     <f:selectItems value="#{administrarClientesView.tiendas}" var="tienda" itemLabel="#{tienda.nombre}" itemValue="#{tienda.tiendaId}"/>
                                 </p:selectOneMenu>
                             </div>
-
-                            <div class="p-col-12 p-md-4">
-                                <p:button value="Limpiar" styleClass="ui-button-success" disabled="#{administrarClientesView.tempCliente.clienteId != null}" />
-                            </div>
-                            <div class="p-col-12 p-md-4">
-                                <p:button value="Registrar Cliente" styleClass="ui-button-secondary" disabled="#{administrarClientesView.tempCliente.clienteId != null}" />
-                            </div>
+                            
+                            <p:commandButton value="Limpiar" styleClass="ui-button-secondary" update="datosCliente" action="#{administrarClientesView.limpiarVista}" />
+                            <p:commandButton value="Buscar" styleClass="ui-button-danger" update="datosCliente" action="#{administrarClientesView.buscar}" />
+                            <p:commandButton value="Editar" styleClass="ui-button-secondary" update="datosCliente" disabled="#{administrarClientesView.tempCliente.clienteId == null}" action="#{administrarClientesView.editar}" />
+                            <p:commandButton value="Eliminar" styleClass="ui-button-danger" update="datosCliente" disabled="#{administrarClientesView.tempCliente.clienteId == null}" action="#{administrarClientesView.eliminar}" />
+                            <p:commandButton value="Registrar" styleClass="ui-button-secondary" update="datosCliente" disabled="#{administrarClientesView.tempCliente.clienteId != null}" action="#{administrarClientesView.registrar}" />                            
 
                         </h:form>
 
@@ -118,7 +117,7 @@
                             <p:column headerText="Apellidos">
                                 <h:outputText value="#{cliente.apellidos}" />
                             </p:column>
-                            
+
                             <p:column headerText="Tienda">
                                 <h:outputText value="#{cliente.tiendaId.nombre}" />
                             </p:column>
