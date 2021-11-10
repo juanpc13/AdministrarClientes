@@ -55,12 +55,16 @@
 
                             <div class="p-field p-col-12 p-md-12">
                                 <p:outputLabel value="Nombres"/>
-                                <p:inputText id="nombres" value="#{administrarClientesView.tempCliente.nombres}"/>
+                                <p:inputText id="nombres" required="true" value="#{administrarClientesView.tempCliente.nombres}">
+                                    <p:keyFilter regEx="/[a-zA-ZÀ-ú\\s\\' ]+/"/>
+                                </p:inputText>
                             </div>
 
                             <div class="p-field p-col-12 p-md-12">
                                 <p:outputLabel value="Apellidos"/>
-                                <p:inputText id="apellidos" value="#{administrarClientesView.tempCliente.apellidos}"/>
+                                <p:inputText id="apellidos" value="#{administrarClientesView.tempCliente.apellidos}">
+                                    <p:keyFilter regEx="/[a-zA-ZÀ-ú\\s\\' ]+/"/>
+                                </p:inputText>
                             </div>
 
                             <div class="p-field p-col-12 p-md-12">

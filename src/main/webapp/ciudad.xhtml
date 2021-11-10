@@ -67,7 +67,9 @@
 
                             <div class="p-field p-col-12 p-md-12">
                                 <p:outputLabel value="Nombre"/>
-                                <p:inputText id="direccion" value="#{ciudadView.tempCiudad.ciudad}"/>
+                                <p:inputText id="direccion" required="true" value="#{ciudadView.tempCiudad.ciudad}">
+                                    <p:keyFilter regEx="/[a-zA-ZÀ-ú\\s\\' ]+/"/>
+                                </p:inputText>
                             </div>
 
                             <div class="p-field p-col-12 p-md-12">

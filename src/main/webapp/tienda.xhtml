@@ -84,12 +84,14 @@
 
                             <div class="p-field p-col-12 p-md-12">
                                 <p:outputLabel value="Nombre"/>
-                                <p:inputText id="nombres" value="#{tiendaView.tempTienda.nombre}"/>
+                                <p:inputText id="nombres" required="true" value="#{tiendaView.tempTienda.nombre}">
+                                    <p:keyFilter regEx="/[a-zA-ZÀ-ú\\s\\' ]+/"/>
+                                </p:inputText>
                             </div>
 
                             <div class="p-field p-col-12 p-md-12">
                                 <p:outputLabel value="Telefono"/>
-                                <p:inputText id="apellidos" type="number" value="#{tiendaView.tempTienda.telefono}"/>
+                                <p:inputText id="telefono" type="number" required="true" value="#{tiendaView.tempTienda.telefono}"/>
                             </div>
 
                             <p:commandButton value="Limpiar" styleClass="ui-button-secondary" update="datosTienda" action="#{tiendaView.limpiarVista}" />
