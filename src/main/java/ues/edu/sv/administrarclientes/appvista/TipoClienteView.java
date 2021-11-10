@@ -20,7 +20,7 @@ import ues.edu.sv.administrarclientes.entidades.Tipo;
 
 /**
  *
- * @author Juan
+ * @author Sergio
  */
 @Named
 @ViewScoped

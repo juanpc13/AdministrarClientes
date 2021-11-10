@@ -22,7 +22,7 @@ import ues.edu.sv.administrarclientes.entidades.Pais;
 
 /**
  *
- * @author Juan
+ * @author Sergio
  */
 @Named
 @ViewScoped

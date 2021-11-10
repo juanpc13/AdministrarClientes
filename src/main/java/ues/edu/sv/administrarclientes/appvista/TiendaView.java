@@ -16,21 +16,17 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import ues.edu.sv.administrarclientes.controlador.CiudadFacade;
-import ues.edu.sv.administrarclientes.entidades.Cliente;
 import ues.edu.sv.administrarclientes.entidades.Direccion;
 import ues.edu.sv.administrarclientes.entidades.Pais;
 import ues.edu.sv.administrarclientes.entidades.Tienda;
-import ues.edu.sv.administrarclientes.controlador.ClienteFacade;
 import ues.edu.sv.administrarclientes.controlador.DireccionFacade;
 import ues.edu.sv.administrarclientes.controlador.PaisFacade;
 import ues.edu.sv.administrarclientes.controlador.TiendaFacade;
-import ues.edu.sv.administrarclientes.controlador.TipoFacade;
 import ues.edu.sv.administrarclientes.entidades.Ciudad;
-import ues.edu.sv.administrarclientes.entidades.Tipo;
 
 /**
  *
- * @author Juan
+ * @author Sergio
  */
 @Named
 @ViewScoped
