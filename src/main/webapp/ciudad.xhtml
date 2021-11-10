@@ -36,63 +36,51 @@
             </p:tabMenu>
         </div>
 
-        <h2>Administrar Direcciones</h2>
+        <h2>Administrar Ciudades</h2>
 
         <div class="p-grid">
 
             <div class="p-col-12 p-md-4">
                 <div class="p-mx-3">
-                    <h2>Datos de la Region</h2>
-
+                    
                     <div class="ui-fluid p-formgrid p-grid">
 
-                        <h:form id="datosDireccion" style="width: 100%">
+                        <h:form id="datosCiudad" style="width: 100%">
+                            
+                            <h2>Seleccionar Pais</h2>
                             
                             <div class="p-field p-col-12 p-md-12">
                                 <p:outputLabel value="Pais"/>
-                                <p:selectOneMenu id="pais" value="#{direccionView.selectedPais.paisId}">
-                                    <p:ajax event="itemSelect" listener="#{direccionView.onPaisSelect}" update="ciudad" />
+                                <p:selectOneMenu id="pais" value="#{ciudadView.selectedPais.paisId}">
+                                    <p:ajax event="itemSelect" listener="#{ciudadView.onPaisSelect}"/>
                                     <f:selectItem itemLabel="Seleccionar Pais" itemValue="" noSelectionOption="true"/>
-                                    <f:selectItems value="#{direccionView.paises}" var="pais" itemLabel="#{pais.pais}" itemValue="#{pais.paisId}"/>
+                                    <f:selectItems value="#{ciudadView.paises}" var="pais" itemLabel="#{pais.pais}" itemValue="#{pais.paisId}"/>
                                 </p:selectOneMenu>
                             </div>
 
-                            <div class="p-field p-col-12 p-md-12">
-                                <p:outputLabel value="Ciudad"/>
-                                <p:selectOneMenu id="ciudad" value="#{direccionView.selectedCiudad.ciudadId}">
-                                    <p:ajax event="itemSelect" listener="#{direccionView.onCiudadSelect}" update="direccion" />
-                                    <f:selectItem itemLabel="Seleccionar Ciudad" itemValue="" noSelectionOption="true"/>
-                                    <f:selectItems value="#{direccionView.selectedPais.ciudadList}" var="ciudad" itemLabel="#{ciudad.ciudad}" itemValue="#{ciudad.ciudadId}"/>
-                                </p:selectOneMenu>
-                            </div>
-                            
-                            <h2>Datos de la Direccion</h2>
+                            <h2>Datos de la ciudad</h2>
 
                             <div class="p-field p-col-12 p-md-12">
                                 <p:outputLabel value="ID"/>
-                                <p:inputText id="idDireccion" value="#{direccionView.tempDireccion.direccionId}" disabled="true"/>
+                                <p:inputText id="idDireccion" value="#{ciudadView.tempCiudad.ciudadId}" disabled="true"/>
                             </div>
 
                             <div class="p-field p-col-12 p-md-12">
-                                <p:outputLabel value="Direccion"/>
-                                <p:inputText id="direccion" value="#{direccionView.tempDireccion.direccion}"/>
+                                <p:outputLabel value="Nombre"/>
+                                <p:inputText id="direccion" value="#{ciudadView.tempCiudad.ciudad}"/>
                             </div>
 
                             <div class="p-field p-col-12 p-md-12">
-                                <p:outputLabel value="Direccion 2(Opcional)"/>
-                                <p:inputText id="direccion2" value="#{direccionView.tempDireccion.direccion2}"/>
-                            </div>
-                            
-                            <div class="p-field p-col-12 p-md-12">
-                                <p:outputLabel value="Codigo Postal(Opcional)"/>
-                                <p:inputText id="codigo_postal" type="number" value="#{direccionView.tempDireccion.codigoPostal}"/>
+                                <p:outputLabel value="Activo"/>
+                                <br/>
+                                <p:selectBooleanButton onLabel="Si" offLabel="No" value="#{ciudadView.marcador}" style="width:8rem"/>
                             </div>
 
-                            <p:commandButton value="Limpiar" styleClass="ui-button-secondary" update="datosDireccion" action="#{direccionView.limpiarVista}" />
-                            <!--<p:commandButton value="Buscar" styleClass="ui-button-danger" update="datosDireccion" action="#{direccionView.buscar}" />-->
-                            <p:commandButton value="Editar" styleClass="ui-button-secondary" update="datosDireccion, clientes:tabla" disabled="#{direccionView.tempDireccion.direccionId == null}" action="#{direccionView.editar}" />
-                            <p:commandButton value="Eliminar" styleClass="ui-button-danger" update="datosDireccion, clientes:tabla" disabled="#{direccionView.tempDireccion.direccionId == null}" action="#{direccionView.eliminar}" />
-                            <p:commandButton value="Registrar" styleClass="ui-button-secondary" update="datosDireccion, clientes:tabla" disabled="#{direccionView.tempDireccion.direccionId != null}" action="#{direccionView.registrar}" />
+                            <p:commandButton value="Limpiar" styleClass="ui-button-secondary" update="datosCiudad" action="#{ciudadView.limpiarVista}" />
+                            <!--<p:commandButton value="Buscar" styleClass="ui-button-danger" update="datosCiudad" action="#{ciudadView.buscar}" />-->
+                            <p:commandButton value="Editar" styleClass="ui-button-secondary" update="datosCiudad, clientes:tabla" disabled="#{ciudadView.tempCiudad.ciudadId == null}" action="#{ciudadView.editar}" />
+                            <p:commandButton value="Eliminar" styleClass="ui-button-danger" update="datosCiudad, clientes:tabla" disabled="#{ciudadView.tempCiudad.ciudadId == null}" action="#{ciudadView.eliminar}" />
+                            <p:commandButton value="Registrar" styleClass="ui-button-secondary" update="datosCiudad, clientes:tabla" disabled="#{ciudadView.tempCiudad.ciudadId != null}" action="#{ciudadView.registrar}" />
 
                         </h:form>
 
@@ -104,47 +92,39 @@
             <div class="p-col-12 p-md-8">
                 <div class="p-mx-3">
                     <h:form id="clientes" style="width: 100%">
-                        <h2>Todas las direcciones</h2>
-                        <p:dataTable id="tabla" var="direccion" widgetVar="tabla" value="#{direccionView.direcciones}" emptyMessage="Sin direcciones"
-                                     selection="#{direccionView.tempDireccion}" selectionMode="single" rowKey="#{direccion.direccionId}"
-                                     globalFilterFunction="#{direccionView.globalFilterFunction}" 
-                                     rows="10" paginator="true" rowsPerPageTemplate="10,50,100,{ShowAll|'Todos'}">
+                        <h2>Todas las ciudades</h2>
+                        <p:dataTable id="tabla" var="ciudad" widgetVar="tabla" value="#{ciudadView.ciudades}" emptyMessage="Sin direcciones"
+                                     selection="#{ciudadView.tempCiudad}" selectionMode="single" rowKey="#{ciudad.ciudadId}"
+                                     globalFilterFunction="#{ciudadView.globalFilterFunction}" 
+                                     rows="20" paginator="true" rowsPerPageTemplate="10,50,100,{ShowAll|'Todos'}">
 
                             <f:facet name="header">
                                 <div class="p-d-flex p-jc-end">
                                     <p:inputText id="globalFilter" onkeyup="PF('tabla').filter()" style="width:400px"
-                                                 placeholder="Buscar por direccion o ciudad o pais" />
+                                                 placeholder="Buscar por ciudad o pais" />
                                 </div>
                             </f:facet>
 
-                            <p:ajax event="rowSelect" listener="#{direccionView.onRowSelect}" update="datosDireccion"/>
+                            <p:ajax event="rowSelect" listener="#{ciudadView.onRowSelect}" update="datosCiudad"/>
 
                             <p:column headerText="ID" width="10%">
-                                <h:outputText value="#{direccion.direccionId}" />
+                                <h:outputText value="#{ciudad.ciudadId}" />
                             </p:column>
 
-                            <p:column headerText="Direccion">
-                                <h:outputText value="#{direccion.direccion}" />
-                            </p:column>
-
-                            <p:column headerText="Direccion 2">
-                                <h:outputText value="#{direccion.direccion2}" />
-                            </p:column>
-
-                            <p:column headerText="Codigo Postal">
-                                <h:outputText value="#{direccion.codigoPostal}" />
-                            </p:column>
-                            
                             <p:column headerText="Ciudad">
-                                <h:outputText value="#{direccion.ciudadId.ciudad}" />
+                                <h:outputText value="#{ciudad.ciudad}" />
                             </p:column>
                             
                             <p:column headerText="Pais">
-                                <h:outputText value="#{direccion.ciudadId.paisId.pais}" />
+                                <h:outputText value="#{ciudad.paisId.pais}" />
+                            </p:column>
+
+                            <p:column headerText="Activo" width="10%">
+                                <h:outputText value="#{ciudad.activo == 1 ? 'Si':'No'}" />
                             </p:column>
 
                             <p:column headerText="Creado">
-                                <h:outputText value="#{direccion.fechaCreacionTXT}" />
+                                <h:outputText value="#{ciudad.fechaCreacionTXT}" />
                             </p:column>
 
                         </p:dataTable>

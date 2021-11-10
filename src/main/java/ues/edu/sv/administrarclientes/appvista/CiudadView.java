@@ -16,10 +16,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import ues.edu.sv.administrarclientes.controlador.CiudadFacade;
-import ues.edu.sv.administrarclientes.controlador.DireccionFacade;
 import ues.edu.sv.administrarclientes.controlador.PaisFacade;
 import ues.edu.sv.administrarclientes.entidades.Ciudad;
-import ues.edu.sv.administrarclientes.entidades.Direccion;
 import ues.edu.sv.administrarclientes.entidades.Pais;
 
 /**
@@ -28,32 +26,29 @@ import ues.edu.sv.administrarclientes.entidades.Pais;
  */
 @Named
 @ViewScoped
-public class DireccionView implements Serializable {
+public class CiudadView implements Serializable {
 
     // Controladores
     @Inject
     private PaisFacade paisFacade;
     @Inject
     private CiudadFacade ciudadFacade;
-    @Inject
-    private DireccionFacade direccionFacade;
-
+    
     // Listas de los datos
     private List<Pais> paises;
-    private List<Direccion> direcciones;
+    private List<Ciudad> ciudades;
 
     // Selecciones temporal
-    private Direccion tempDireccion;
+    private Ciudad tempCiudad;
 
     // Selected
     private Pais selectedPais;
-    private Ciudad selectedCiudad;
 
     @PostConstruct
     public void init() {
         // Inicializando como new las variables
         paises = new ArrayList<>();
-        direcciones = new ArrayList<>();
+        ciudades = new ArrayList<>();
         limpiarVista();
 
         // Se cargan las listas
@@ -63,18 +58,17 @@ public class DireccionView implements Serializable {
         updateTable();
     }
 
-    public void clearTempDireccion() {
-        tempDireccion = new Direccion();
+    public void clearTempCiudad() {
+        tempCiudad = new Ciudad();
     }
 
     public void limpiarVista() {
-        clearTempDireccion();
+        clearTempCiudad();
         selectedPais =  new Pais();
-        selectedCiudad = new Ciudad();
     }
 
     public void updateTable() {
-        direcciones = direccionFacade.findAll();
+        ciudades = ciudadFacade.findAll();
     }
 
     public List<Pais> getPaises() {
@@ -85,20 +79,20 @@ public class DireccionView implements Serializable {
         this.paises = paises;
     }
 
-    public List<Direccion> getDirecciones() {
-        return direcciones;
+    public List<Ciudad> getCiudades() {
+        return ciudades;
     }
 
-    public void setDirecciones(List<Direccion> direcciones) {
-        this.direcciones = direcciones;
+    public void setCiudades(List<Ciudad> ciudades) {
+        this.ciudades = ciudades;
     }
 
-    public Direccion getTempDireccion() {
-        return tempDireccion;
+    public Ciudad getTempCiudad() {
+        return tempCiudad;
     }
 
-    public void setTempDireccion(Direccion tempDireccion) {
-        this.tempDireccion = tempDireccion;
+    public void setTempCiudad(Ciudad tempCiudad) {
+        this.tempCiudad = tempCiudad;
     }
 
     public Pais getSelectedPais() {
@@ -108,18 +102,18 @@ public class DireccionView implements Serializable {
     public void setSelectedPais(Pais selectedPais) {
         this.selectedPais = selectedPais;
     }
-
-    public Ciudad getSelectedCiudad() {
-        return selectedCiudad;
+    
+    public Boolean getMarcador() {
+        return tempCiudad.getActivo() == 1; // Conversion del activo de tipo
     }
 
-    public void setSelectedCiudad(Ciudad selectedCiudad) {
-        this.selectedCiudad = selectedCiudad;
+    public void setMarcador(Boolean marcador) {
+        int value = marcador ? 1 : 0;
+        tempCiudad.setActivo(value);
     }
 
     public void onRowSelect() {
-        selectedCiudad = tempDireccion.getCiudadId();
-        selectedPais = tempDireccion.getCiudadId().getPaisId();
+        selectedPais = tempCiudad.getPaisId();
     }
 
     public void buscar() {
@@ -127,19 +121,18 @@ public class DireccionView implements Serializable {
     }
 
     public void registrar() {
-        tempDireccion.setCiudadId(selectedCiudad);
-        tempDireccion.setFechaCreacion(new Date());
-        direccionFacade.create(tempDireccion);
-        direccionFacade.clearCache();
+        tempCiudad.setPaisId(selectedPais);
+        tempCiudad.setFechaCreacion(new Date());
+        tempCiudad = ciudadFacade.createObId(tempCiudad);
         //clearTempTipo();
         updateTable();
     }
 
     public void eliminar() {
         // Se obtiene el id para eliminar
-        BigDecimal direccionId = tempDireccion.getDireccionId();
+        BigDecimal direccionId = tempCiudad.getCiudadId();
         if (direccionId != null) {
-            direccionFacade.remove(tempDireccion);
+            ciudadFacade.remove(tempCiudad);
         }
         // Se actualiza la tabla principal
         updateTable();
@@ -147,12 +140,12 @@ public class DireccionView implements Serializable {
 
     public void editar() {
         // Se obtiene el id para editar
-        BigDecimal direccionId = tempDireccion.getDireccionId();
+        BigDecimal direccionId = tempCiudad.getCiudadId();
 
         if (direccionId != null) {
             // Se edita
-            tempDireccion.setCiudadId(selectedCiudad);
-            direccionFacade.edit(tempDireccion);
+            tempCiudad.setPaisId(selectedPais);
+            ciudadFacade.edit(tempCiudad);
         }
         // Se actualiza la tabla principal
         updateTable();
@@ -163,10 +156,9 @@ public class DireccionView implements Serializable {
         if (filterText == null || filterText.isEmpty()) {
             return true;
         }
-        Direccion direccion = (Direccion) value;
-        return direccion.getDireccion().toLowerCase().contains(filterText)
-                || direccion.getCiudadId().getCiudad().toLowerCase().contains(filterText)
-                || direccion.getCiudadId().getPaisId().getPais().toLowerCase().contains(filterText);
+        Ciudad ciudad = (Ciudad) value;
+        return ciudad.getCiudad().toLowerCase().contains(filterText)
+                || ciudad.getPaisId().getPais().toLowerCase().contains(filterText);
     }
     
     public void onPaisSelect() {
@@ -174,16 +166,6 @@ public class DireccionView implements Serializable {
         // Se verfica que no este null
         if (paisId != null) {
             selectedPais = paisFacade.find(paisId);
-        }
-        // Se limpia la ciudad
-        selectedCiudad = new Ciudad();
-    }
-    
-    public void onCiudadSelect() {
-        BigDecimal ciudadId = selectedCiudad.getCiudadId();
-        // Se verfica que no este null
-        if (ciudadId != null) {
-            selectedCiudad = ciudadFacade.find(ciudadId);
         }
     }
 
