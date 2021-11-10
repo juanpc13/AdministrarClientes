@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ues.edu.sv.administrarclientes</groupId>
-    <artifactId>AdministrarClientes</artifactId>
+    <artifactId>PRN315grupo-5</artifactId>
     <version>1.0</version>
     <packaging>war</packaging>
 
-    <name>AdministrarClientes</name>
+    <name>PRN315grupo-5</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
