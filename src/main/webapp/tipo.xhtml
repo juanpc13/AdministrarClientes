@@ -7,6 +7,8 @@
 
     <h:head>
         <title>Modulo Mantenimiento</title>
+        <link rel="stylesheet" href="css/primeflex.min.css" />
+        <link rel="stylesheet" href="css/custom.css" />
     </h:head>
 
     <h:body>
@@ -31,84 +33,39 @@
             </p:tabMenu>
         </div>
 
-        <h2>Administrar Clientes</h2>
+        <h2>Tipos de Clientes</h2>
 
         <div class="p-grid">
 
             <div class="p-col-12 p-md-4">
                 <div class="p-mx-3">
-                    <h2>Datos del Clientes</h2>
+                    <h2>Detalles tipo cliente</h2>
 
                     <div class="ui-fluid p-formgrid p-grid">
 
-                        <h:form id="datosCliente" style="width: 100%">
+                        <h:form id="datosTipo" style="width: 100%">
 
                             <div class="p-field p-col-12 p-md-12">
                                 <p:outputLabel value="ID"/>
-                                <p:inputText id="idCliente" value="#{administrarClientesView.tempCliente.clienteId}" disabled="true"/>
+                                <p:inputText id="idCliente" value="#{tipoClienteView.tempTipo.tipoId}" disabled="true"/>
                             </div>
 
                             <div class="p-field p-col-12 p-md-12">
                                 <p:outputLabel value="Nombres"/>
-                                <p:inputText id="nombres" value="#{administrarClientesView.tempCliente.nombres}"/>
+                                <p:inputText id="nombres" value="#{tipoClienteView.tempTipo.nombre}"/>
                             </div>
-
+                            
                             <div class="p-field p-col-12 p-md-12">
-                                <p:outputLabel value="Apellidos"/>
-                                <p:inputText id="apellidos" value="#{administrarClientesView.tempCliente.apellidos}"/>
+                                <p:outputLabel value="Activo"/>
+                                <br/>
+                                <p:selectBooleanButton onLabel="Si" offLabel="No" value="#{tipoClienteView.marcador}" style="width:8rem"/>
                             </div>
 
-                            <div class="p-field p-col-12 p-md-12">
-                                <p:outputLabel value="Tipo"/>
-                                <p:selectCheckboxMenu id="tipo" value="#{administrarClientesView.tempCliente.tipoList}" label="Seleccionar Tipo" style="min-width: 15rem"
-                                                      multiple="true" filter="true" filterMatchMode="startsWith" panelStyle="width: 30rem" scrollHeight="250">
-                                    <p:ajax event="change" listener="#{administrarClientesView.onTipoSelect}"/>
-                                    <f:selectItems value="#{administrarClientesView.tipos}" var="tipo" itemLabel="#{tipo.nombre}" itemValue="#{tipo}"/>
-                                </p:selectCheckboxMenu>
-
-                            </div>
-
-                            <div class="p-field p-col-12 p-md-12">
-                                <p:outputLabel value="Pais"/>
-                                <p:selectOneMenu id="pais" value="#{administrarClientesView.selectedPais.paisId}">
-                                    <p:ajax event="itemSelect" listener="#{administrarClientesView.onPaisSelect}" update="ciudad, direccion" />
-                                    <f:selectItem itemLabel="Seleccionar Pais" itemValue="" noSelectionOption="true"/>
-                                    <f:selectItems value="#{administrarClientesView.paises}" var="pais" itemLabel="#{pais.pais}" itemValue="#{pais.paisId}"/>
-                                </p:selectOneMenu>
-                            </div>
-
-                            <div class="p-field p-col-12 p-md-12">
-                                <p:outputLabel value="Ciudad"/>
-                                <p:selectOneMenu id="ciudad" value="#{administrarClientesView.selectedCiudad.ciudadId}">
-                                    <p:ajax event="itemSelect" listener="#{administrarClientesView.onCiudadSelect}" update="direccion" />
-                                    <f:selectItem itemLabel="Seleccionar Ciudad" itemValue="" noSelectionOption="true"/>
-                                    <f:selectItems value="#{administrarClientesView.selectedPais.ciudadList}" var="ciudad" itemLabel="#{ciudad.ciudad}" itemValue="#{ciudad.ciudadId}"/>
-                                </p:selectOneMenu>
-                            </div>
-
-                            <div class="p-field p-col-12 p-md-12">
-                                <p:outputLabel value="Direccion"/>
-                                <p:selectOneMenu id="direccion" value="#{administrarClientesView.selectedDireccion.direccionId}">
-                                    <p:ajax event="itemSelect" listener="#{administrarClientesView.onDireccionSelect}" update="tienda" />
-                                    <f:selectItem itemLabel="Seleccionar Direccion" itemValue="" noSelectionOption="true"/>
-                                    <f:selectItems value="#{administrarClientesView.selectedCiudad.direccionList}" var="direccion" itemLabel="#{direccion.direccion}" itemValue="#{direccion.direccionId}"/>
-                                </p:selectOneMenu>
-                            </div>
-
-                            <div class="p-field p-col-12 p-md-12">
-                                <p:outputLabel value="Tienda"/>
-                                <p:selectOneMenu id="tienda" value="#{administrarClientesView.selectedTienda.tiendaId}">
-                                    <p:ajax event="itemSelect" listener="#{administrarClientesView.onTiendaSelect}" update="tienda" />
-                                    <f:selectItem itemLabel="Seleccionar Tienda" itemValue="" noSelectionOption="true"/>
-                                    <f:selectItems value="#{administrarClientesView.tiendas}" var="tienda" itemLabel="#{tienda.nombre}" itemValue="#{tienda.tiendaId}"/>
-                                </p:selectOneMenu>
-                            </div>
-
-                            <p:commandButton value="Limpiar" styleClass="ui-button-secondary" update="datosCliente" action="#{administrarClientesView.limpiarVista}" />
-                            <!--<p:commandButton value="Buscar" styleClass="ui-button-danger" update="datosCliente" action="#{administrarClientesView.buscar}" />-->
-                            <p:commandButton value="Editar" styleClass="ui-button-secondary" update="datosCliente, clientes:tabla" disabled="#{administrarClientesView.tempCliente.clienteId == null}" action="#{administrarClientesView.editar}" />
-                            <p:commandButton value="Eliminar" styleClass="ui-button-danger" update="datosCliente, clientes:tabla" disabled="#{administrarClientesView.tempCliente.clienteId == null}" action="#{administrarClientesView.eliminar}" />
-                            <p:commandButton value="Registrar" styleClass="ui-button-secondary" update="datosCliente, clientes:tabla" disabled="#{administrarClientesView.tempCliente.clienteId != null}" action="#{administrarClientesView.registrar}" />
+                            <p:commandButton value="Limpiar" styleClass="ui-button-secondary" update="datosTipo" action="#{tipoClienteView.limpiarVista}" />
+                            <!--<p:commandButton value="Buscar" styleClass="ui-button-danger" update="datosTipo" action="#{tipoClienteView.buscar}" />-->
+                            <p:commandButton value="Editar" styleClass="ui-button-secondary" update="datosTipo, tipos:tabla" disabled="#{tipoClienteView.tempTipo.tipoId == null}" action="#{tipoClienteView.editar}" />
+                            <p:commandButton value="Eliminar" styleClass="ui-button-danger" update="datosTipo, tipos:tabla" disabled="#{tipoClienteView.tempTipo.tipoId == null}" action="#{tipoClienteView.eliminar}" />
+                            <p:commandButton value="Registrar" styleClass="ui-button-secondary" update="datosTipo, tipos:tabla" disabled="#{tipoClienteView.tempTipo.tipoId != null}" action="#{tipoClienteView.registrar}" />
 
                         </h:form>
 
@@ -119,40 +76,32 @@
 
             <div class="p-col-12 p-md-8">
                 <div class="p-mx-3">
-                    <h:form id="clientes" style="width: 100%">
-                        <h2>Todos Clientes</h2>
-                        <p:dataTable id="tabla" var="cliente" widgetVar="tabla" value="#{administrarClientesView.clientes}" emptyMessage="Sin Clientes"
-                                     selection="#{administrarClientesView.tempCliente}" selectionMode="single" rowKey="#{cliente.clienteId}"
-                                     globalFilterFunction="#{administrarClientesView.globalFilterFunction}" 
-                                     rows="10" paginator="true" rowsPerPageTemplate="10,50,100,{ShowAll|'Todos'}">
+                    <h:form id="tipos" style="width: 100%">
+                        <h2>Todos tipos de clientes</h2>
+                        <p:dataTable id="tabla" var="tipo" widgetVar="tabla" value="#{tipoClienteView.tipos}" emptyMessage="Sin Clientes"
+                                     selection="#{tipoClienteView.tempTipo}" selectionMode="single" rowKey="#{tipo.tipoId}"
+                                     globalFilterFunction="#{tipoClienteView.globalFilterFunction}" 
+                                     rows="20" paginator="true" rowsPerPageTemplate="10,50,100,{ShowAll|'Todos'}">
 
                             <f:facet name="header">
                                 <div class="p-d-flex p-jc-end">
                                     <p:inputText id="globalFilter" onkeyup="PF('tabla').filter()" style="width:300px"
-                                                 placeholder="Buscar por nombre o tienda" />
+                                                 placeholder="Buscar por nombre" />
                                 </div>
                             </f:facet>
 
-                            <p:ajax event="rowSelect" listener="#{administrarClientesView.onRowSelect}" update="datosCliente"/>
+                            <p:ajax event="rowSelect" listener="#{tipoClienteView.onRowSelect}" update="datosTipo"/>
 
                             <p:column headerText="ID" width="10%">
-                                <h:outputText value="#{cliente.clienteId}" />
+                                <h:outputText value="#{tipo.tipoId}" />
                             </p:column>
 
                             <p:column headerText="Nombres">
-                                <h:outputText value="#{cliente.nombres}" />
+                                <h:outputText value="#{tipo.nombre}" />
                             </p:column>
 
-                            <p:column headerText="Apellidos">
-                                <h:outputText value="#{cliente.apellidos}" />
-                            </p:column>
-
-                            <p:column headerText="Tienda">
-                                <h:outputText value="#{cliente.tiendaId.nombre}" />
-                            </p:column>
-
-                            <p:column headerText="Creado">
-                                <h:outputText value="#{cliente.fechaCreacionTXT}" />
+                            <p:column headerText="Activo">
+                                <h:outputText value="#{tipo.activo == 1 ? 'Si':'No'}" />
                             </p:column>
 
                         </p:dataTable>
