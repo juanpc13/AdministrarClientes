@@ -7,6 +7,7 @@ package ues.edu.sv.administrarclientes.entidades;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -37,11 +38,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "tienda")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Tienda.findAll", query = "SELECT t FROM Tienda t")
-    , @NamedQuery(name = "Tienda.findByTiendaId", query = "SELECT t FROM Tienda t WHERE t.tiendaId = :tiendaId")
-    , @NamedQuery(name = "Tienda.findByNombre", query = "SELECT t FROM Tienda t WHERE t.nombre = :nombre")
-    , @NamedQuery(name = "Tienda.findByTelefono", query = "SELECT t FROM Tienda t WHERE t.telefono = :telefono")
-    , @NamedQuery(name = "Tienda.findByFechaCreacion", query = "SELECT t FROM Tienda t WHERE t.fechaCreacion = :fechaCreacion")})
+    @NamedQuery(name = "Tienda.findAll", query = "SELECT t FROM Tienda t"),
+    @NamedQuery(name = "Tienda.findByTiendaId", query = "SELECT t FROM Tienda t WHERE t.tiendaId = :tiendaId"),
+    @NamedQuery(name = "Tienda.findByNombre", query = "SELECT t FROM Tienda t WHERE t.nombre = :nombre"),
+    @NamedQuery(name = "Tienda.findByTelefono", query = "SELECT t FROM Tienda t WHERE t.telefono = :telefono"),
+    @NamedQuery(name = "Tienda.findByFechaCreacion", query = "SELECT t FROM Tienda t WHERE t.fechaCreacion = :fechaCreacion")})
 public class Tienda implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -105,6 +106,10 @@ public class Tienda implements Serializable {
         return telefono;
     }
 
+    public String getTelefonoTXT() {
+        return telefono + "";
+    }
+
     public void setTelefono(int telefono) {
         this.telefono = telefono;
     }
@@ -115,6 +120,14 @@ public class Tienda implements Serializable {
 
     public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
+    }
+    
+    public String getFechaCreacionTXT(){
+        if(this.fechaCreacion == null){
+            return "";
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MMM/yyyy hh:mm a");
+        return formatter.format(this.fechaCreacion);
     }
 
     @XmlTransient
@@ -158,5 +171,5 @@ public class Tienda implements Serializable {
     public String toString() {
         return "ues.edu.sv.admin.clientes.administrarclientes.Tienda[ tiendaId=" + tiendaId + " ]";
     }
-    
+
 }

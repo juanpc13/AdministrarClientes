@@ -15,7 +15,17 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import ues.edu.sv.administrarclientes.controlador.CiudadFacade;
+import ues.edu.sv.administrarclientes.entidades.Cliente;
+import ues.edu.sv.administrarclientes.entidades.Direccion;
+import ues.edu.sv.administrarclientes.entidades.Pais;
+import ues.edu.sv.administrarclientes.entidades.Tienda;
+import ues.edu.sv.administrarclientes.controlador.ClienteFacade;
+import ues.edu.sv.administrarclientes.controlador.DireccionFacade;
+import ues.edu.sv.administrarclientes.controlador.PaisFacade;
+import ues.edu.sv.administrarclientes.controlador.TiendaFacade;
 import ues.edu.sv.administrarclientes.controlador.TipoFacade;
+import ues.edu.sv.administrarclientes.entidades.Ciudad;
 import ues.edu.sv.administrarclientes.entidades.Tipo;
 
 /**
@@ -28,64 +38,137 @@ public class TiendaView implements Serializable {
 
     // Controladores
     @Inject
-    private TipoFacade tipoFacade;
+    private PaisFacade paisFacade;
+    @Inject
+    private CiudadFacade ciudadFacade;
+    @Inject
+    private DireccionFacade direccionFacade;
+    @Inject
+    private TiendaFacade tiendaFacade;
 
     // Listas de los datos
-    private List<Tipo> tipos;
+    private List<Pais> paises;
+    private List<Tienda> tiendas;
 
-    // Seleccion temporal
-    private Tipo tempTipo;
+    // Selecciones de la vista
+    private Pais selectedPais;
+    private Ciudad selectedCiudad;
+    private Direccion selectedDireccion;
+
+    // temporal
+    private Tienda tempTienda;
 
     @PostConstruct
     public void init() {
         // Inicializando como new las variables
-        tipos = new ArrayList<>();
+        paises = new ArrayList<>();
+        tiendas = new ArrayList<>();
         limpiarVista();
 
         // Cargar las listas
-        tipos = tipoFacade.findAll();
+        paises = paisFacade.findAll();
+        tiendas = tiendaFacade.findAll();
         updateTable();
     }
 
-    public void clearTempTipo() {
-        tempTipo = new Tipo();
+    public void clearTempTienda() {
+        tempTienda = new Tienda();
     }
 
     public void limpiarVista() {
-        clearTempTipo();
+        clearTempTienda();
+        // Seleciones se instancias
+        selectedPais = new Pais();
+        selectedCiudad = new Ciudad();
+        selectedDireccion = new Direccion();
     }
 
     public void updateTable() {
-        tipos = tipoFacade.findAll();
+        tiendas = tiendaFacade.findAll();
     }
 
-    public Tipo getTempTipo() {
-        return tempTipo;
+    public Tienda getTempTienda() {
+        return tempTienda;
     }
 
-    public void setTempTipo(Tipo tempTipo) {
-        this.tempTipo = tempTipo;
+    public void setTempTienda(Tienda tempTienda) {
+        this.tempTienda = tempTienda;
     }
 
-    public List<Tipo> getTipos() {
-        return tipos;
+    public List<Pais> getPaises() {
+        return paises;
     }
 
-    public void setTipos(List<Tipo> tipos) {
-        this.tipos = tipos;
+    public void setPaises(List<Pais> paises) {
+        this.paises = paises;
     }
 
-    public Boolean getMarcador() {
-        return tempTipo.getActivo() == 1; // Conversion del activo de tipo
+    public List<Tienda> getTiendas() {
+        return tiendas;
     }
 
-    public void setMarcador(Boolean marcador) {
-        int value = marcador ? 1 : 0;
-        tempTipo.setActivo(value);
+    public void setTiendas(List<Tienda> tiendas) {
+        this.tiendas = tiendas;
+    }
+
+    public Pais getSelectedPais() {
+        return selectedPais;
+    }
+
+    public void setSelectedPais(Pais selectedPais) {
+        this.selectedPais = selectedPais;
+    }
+
+    public Ciudad getSelectedCiudad() {
+        return selectedCiudad;
+    }
+
+    public void setSelectedCiudad(Ciudad selectedCiudad) {
+        this.selectedCiudad = selectedCiudad;
+    }
+
+    public Direccion getSelectedDireccion() {
+        return selectedDireccion;
+    }
+
+    public void setSelectedDireccion(Direccion selectedDireccion) {
+        this.selectedDireccion = selectedDireccion;
     }
 
     public void onRowSelect() {
+        selectedDireccion = tempTienda.getDireccionId();
+        selectedCiudad = tempTienda.getDireccionId().getCiudadId();
+        selectedPais = tempTienda.getDireccionId().getCiudadId().getPaisId();
+    }
 
+    public void onPaisSelect() {
+        BigDecimal paisId = selectedPais.getPaisId();
+        // Se verfica que no este null
+        if (paisId != null) {
+            selectedPais = paisFacade.find(paisId);
+        }
+        // Se limpia la ciudad y direccion
+        selectedCiudad = new Ciudad();
+        selectedDireccion = new Direccion();
+    }
+
+    public void onCiudadSelect() {
+        BigDecimal ciudadId = selectedCiudad.getCiudadId();
+        // Se verfica que no este null
+        if (ciudadId != null) {
+            selectedCiudad = ciudadFacade.find(ciudadId);
+        }
+        // Se limpia la direccion
+        selectedDireccion = new Direccion();
+    }
+
+    public void onDireccionSelect() {
+        BigDecimal direccionId = selectedDireccion.getDireccionId();
+        // Se verfica que no este null
+        if (direccionId != null) {
+            selectedDireccion = direccionFacade.find(direccionId);
+            //tiendas = selectedDireccion.getTiendaList();
+        }
     }
 
     public void buscar() {
@@ -93,30 +176,34 @@ public class TiendaView implements Serializable {
     }
 
     public void registrar() {
-        tempTipo.setFechaCreacion(new Date());
-        tipoFacade.create(tempTipo);
+        // Se crea
+        tempTienda.setFechaCreacion(new Date());
+        tempTienda.setDireccionId(selectedDireccion);
+        tempTienda = tiendaFacade.createObId(tempTienda);
+        
         // Se actualiza la tabla principal
-        clearTempTipo();
         updateTable();
     }
 
     public void eliminar() {
-        // Se obtiene el id para eliminar
-        BigDecimal tipoId = tempTipo.getTipoId();
-        if (tipoId != null) {
-            tipoFacade.remove(tempTipo);
+        // Se obtiene el id del cliente para eliminar
+        BigDecimal tiendaId = tempTienda.getTiendaId();
+        if (tiendaId != null) {
+            tiendaFacade.remove(tempTienda);
         }
         // Se actualiza la tabla principal
         updateTable();
     }
 
     public void editar() {
-        // Se obtiene el id para editar
-        BigDecimal tipoId = tempTipo.getTipoId();
+        // Se obtiene el id del cliente para eliminar
+        BigDecimal tiendaId = tempTienda.getTiendaId();
 
-        if (tipoId != null) {
+        if (tiendaId != null) {
+            // Se guardan relaciones externas
+            tempTienda.setDireccionId(selectedDireccion);
             // Se edita
-            tipoFacade.edit(tempTipo);
+            tiendaFacade.edit(tempTienda);
         }
         // Se actualiza la tabla principal
         updateTable();
@@ -127,8 +214,9 @@ public class TiendaView implements Serializable {
         if (filterText == null || filterText.isEmpty()) {
             return true;
         }
-        Tipo tipo = (Tipo) value;
-        return tipo.getNombre().toLowerCase().contains(filterText);
+        Tienda tienda = (Tienda) value;
+        return tienda.getNombre().toLowerCase().contains(filterText)
+                || tienda.getTelefonoTXT().toLowerCase().contains(filterText);
     }
 
 }
