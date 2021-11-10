@@ -103,7 +103,7 @@
                             <p:commandButton value="Buscar" styleClass="ui-button-danger" update="datosCliente" action="#{administrarClientesView.buscar}" />
                             <p:commandButton value="Editar" styleClass="ui-button-secondary" update="datosCliente" disabled="#{administrarClientesView.tempCliente.clienteId == null}" action="#{administrarClientesView.editar}" />
                             <p:commandButton value="Eliminar" styleClass="ui-button-danger" update="datosCliente" disabled="#{administrarClientesView.tempCliente.clienteId == null}" action="#{administrarClientesView.eliminar}" />
-                            <p:commandButton value="Registrar" styleClass="ui-button-secondary" update="datosCliente" disabled="#{administrarClientesView.tempCliente.clienteId != null}" action="#{administrarClientesView.registrar}" />                            
+                            <p:commandButton value="Registrar" styleClass="ui-button-secondary" update="datosCliente, clientes:tabla" disabled="#{administrarClientesView.tempCliente.clienteId != null}" action="#{administrarClientesView.registrar}" />                            
 
                         </h:form>
 
@@ -114,9 +114,9 @@
 
             <div class="p-col-12 p-md-8">
                 <div class="p-mx-3">
-                    <h:form style="width: 100%">
+                    <h:form id="clientes" style="width: 100%">
                         <h2>Todos Clientes</h2>
-                        <p:dataTable var="cliente" value="#{administrarClientesView.clientes}" emptyMessage="Sin Clientes"
+                        <p:dataTable id="tabla" var="cliente" value="#{administrarClientesView.clientes}" emptyMessage="Sin Clientes"
                                      selection="#{administrarClientesView.tempCliente}" selectionMode="single" rowKey="#{cliente.clienteId}">
 
                             <p:ajax event="rowSelect" listener="#{administrarClientesView.onRowSelect}" update="datosCliente"/>

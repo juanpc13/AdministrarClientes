@@ -21,6 +21,16 @@ public abstract class AbstractFacade<T> {
     }
 
     protected abstract EntityManager getEntityManager();
+    
+    public T createObId(T entity) {
+        try {
+            getEntityManager().persist(entity);
+            getEntityManager().flush();            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return entity;
+    }
 
     public void create(T entity) {
         getEntityManager().persist(entity);

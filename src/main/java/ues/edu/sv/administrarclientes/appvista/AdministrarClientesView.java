@@ -8,6 +8,7 @@ package ues.edu.sv.administrarclientes.appvista;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -74,9 +75,9 @@ public class AdministrarClientesView implements Serializable{
         
         // Cargar las listas
         paises = paisFacade.findAll();
-        clientes = clienteFacade.findAll();
         tipos = tipoFacade.findAll();
         tiendas = tiendaFacade.findAll();
+        updateTable();
     }
     
     public void clearTempCliente(){
@@ -93,6 +94,10 @@ public class AdministrarClientesView implements Serializable{
         selectedCiudad = new Ciudad();
         selectedDireccion = new Direccion();
         selectedTienda = new Tienda();
+    }
+    
+    public void updateTable(){
+        clientes = clienteFacade.findAll();
     }
     
     public List<Pais> getPaises() {
@@ -213,8 +218,25 @@ public class AdministrarClientesView implements Serializable{
     }
     
     public void registrar(){
-        System.out.println("Buscando cliente " + tempCliente.getNombres());
-        clienteFacade.create(tempCliente);
+        // Se obtiene la lista del TIPO de cliente y se le retira del objeto
+        // Se retira porque es una entidad o table separada
+        // Primero debe persistir el cliente y luego el tipo de Cliente
+        List<Tipo> tipoList = tempCliente.getTipoList();
+        tempCliente.setTipoList(null);
+        
+        // Se crea al cliente
+        tempCliente.setActivo(1);
+        tempCliente.setTiendaId(selectedTienda);
+        tempCliente.setFechaCreacion(new Date());
+        tempCliente.setDireccionId(selectedDireccion);
+        tempCliente = clienteFacade.createObId(tempCliente);
+        
+        // Se crean los tipos acorde al cliente
+        for (Tipo tipo : tipoList) {
+            tempCliente.getTipoList().add(tipo);
+        }
+        
+        updateTable();
     }
     
     public void eliminar(){
