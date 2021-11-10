@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -278,6 +279,17 @@ public class AdministrarClientesView implements Serializable {
         }
         // Se actualiza la tabla principal
         updateTable();
+    }
+
+    public boolean globalFilterFunction(Object value, Object filter, Locale locale) {
+        String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
+        if (filterText == null || filterText.isEmpty()) {
+            return true;
+        }
+        Cliente cliente = (Cliente) value;
+        return cliente.getNombres().toLowerCase().contains(filterText)
+                || cliente.getApellidos().toLowerCase().contains(filterText)
+                || cliente.getTiendaId().getNombre().toLowerCase().contains(filterText);
     }
 
 }

@@ -28,7 +28,7 @@
         </div>
 
         <h2>Administrar Clientes</h2>
-        
+
         <div class="p-grid">
 
             <div class="p-col-12 p-md-4">
@@ -101,7 +101,7 @@
                             </div>
 
                             <p:commandButton value="Limpiar" styleClass="ui-button-secondary" update="datosCliente" action="#{administrarClientesView.limpiarVista}" />
-                            <p:commandButton value="Buscar" styleClass="ui-button-danger" update="datosCliente" action="#{administrarClientesView.buscar}" />
+                            <!--<p:commandButton value="Buscar" styleClass="ui-button-danger" update="datosCliente" action="#{administrarClientesView.buscar}" />-->
                             <p:commandButton value="Editar" styleClass="ui-button-secondary" update="datosCliente, clientes:tabla" disabled="#{administrarClientesView.tempCliente.clienteId == null}" action="#{administrarClientesView.editar}" />
                             <p:commandButton value="Eliminar" styleClass="ui-button-danger" update="datosCliente, clientes:tabla" disabled="#{administrarClientesView.tempCliente.clienteId == null}" action="#{administrarClientesView.eliminar}" />
                             <p:commandButton value="Registrar" styleClass="ui-button-secondary" update="datosCliente, clientes:tabla" disabled="#{administrarClientesView.tempCliente.clienteId != null}" action="#{administrarClientesView.registrar}" />
@@ -117,8 +117,17 @@
                 <div class="p-mx-3">
                     <h:form id="clientes" style="width: 100%">
                         <h2>Todos Clientes</h2>
-                        <p:dataTable id="tabla" var="cliente" value="#{administrarClientesView.clientes}" emptyMessage="Sin Clientes"
-                                     selection="#{administrarClientesView.tempCliente}" selectionMode="single" rowKey="#{cliente.clienteId}">
+                        <p:dataTable id="tabla" var="cliente" widgetVar="tabla" value="#{administrarClientesView.clientes}" emptyMessage="Sin Clientes"
+                                     selection="#{administrarClientesView.tempCliente}" selectionMode="single" rowKey="#{cliente.clienteId}"
+                                     globalFilterFunction="#{administrarClientesView.globalFilterFunction}" 
+                                     rows="10" paginator="true" rowsPerPageTemplate="10,50,100,{ShowAll|'Todos'}">
+
+                            <f:facet name="header">
+                                <div class="p-d-flex p-jc-end">
+                                    <p:inputText id="globalFilter" onkeyup="PF('tabla').filter()" style="width:300px"
+                                                 placeholder="Buscar por nombre o tienda" />
+                                </div>
+                            </f:facet>
 
                             <p:ajax event="rowSelect" listener="#{administrarClientesView.onRowSelect}" update="datosCliente"/>
 
@@ -137,7 +146,7 @@
                             <p:column headerText="Tienda">
                                 <h:outputText value="#{cliente.tiendaId.nombre}" />
                             </p:column>
-                            
+
                             <p:column headerText="Creado">
                                 <h:outputText value="#{cliente.fechaCreacionTXT}" />
                             </p:column>
