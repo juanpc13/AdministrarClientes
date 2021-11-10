@@ -33,8 +33,8 @@ import ues.edu.sv.administrarclientes.entidades.Tipo;
  */
 @Named
 @ViewScoped
-public class AdministrarClientesView implements Serializable{
-    
+public class AdministrarClientesView implements Serializable {
+
     // Controladores
     @Inject
     private PaisFacade paisFacade;
@@ -48,22 +48,22 @@ public class AdministrarClientesView implements Serializable{
     private ClienteFacade clienteFacade;
     @Inject
     private TipoFacade tipoFacade;
-    
+
     // Listas de los datos
     private List<Pais> paises;
     private List<Cliente> clientes;
     private List<Tipo> tipos;
     private List<Tienda> tiendas;
-    
+
     // Selecciones de la vista
     private Pais selectedPais;
     private Ciudad selectedCiudad;
     private Direccion selectedDireccion;
     private Tienda selectedTienda;
-    
+
     // Cliente temporal
     private Cliente tempCliente;
-    
+
     @PostConstruct
     public void init() {
         // Inicializando como new las variables
@@ -72,22 +72,22 @@ public class AdministrarClientesView implements Serializable{
         tipos = new ArrayList<>();
         tiendas = new ArrayList<>();
         limpiarVista();
-        
+
         // Cargar las listas
         paises = paisFacade.findAll();
         tipos = tipoFacade.findAll();
         tiendas = tiendaFacade.findAll();
         updateTable();
     }
-    
-    public void clearTempCliente(){
+
+    public void clearTempCliente() {
         tempCliente = new Cliente();
         tempCliente.setTiendaId(new Tienda());
         tempCliente.setDireccionId(new Direccion());
         tempCliente.setTipoList(new ArrayList<Tipo>()); //NO SE CREAR AQUI
     }
-    
-    public void limpiarVista(){
+
+    public void limpiarVista() {
         clearTempCliente();
         // Seleciones se instancias
         selectedPais = new Pais();
@@ -95,11 +95,11 @@ public class AdministrarClientesView implements Serializable{
         selectedDireccion = new Direccion();
         selectedTienda = new Tienda();
     }
-    
-    public void updateTable(){
+
+    public void updateTable() {
         clientes = clienteFacade.findAll();
     }
-    
+
     public List<Pais> getPaises() {
         return paises;
     }
@@ -135,7 +135,6 @@ public class AdministrarClientesView implements Serializable{
     public Pais getSelectedPais() {
         return selectedPais;
     }
-    
 
     public void setSelectedPais(Pais selectedPais) {
         this.selectedPais = selectedPais;
@@ -172,8 +171,8 @@ public class AdministrarClientesView implements Serializable{
     public void setSelectedTienda(Tienda selectedTienda) {
         this.selectedTienda = selectedTienda;
     }
-    
-    public void onRowSelect(){
+
+    public void onRowSelect() {
         System.out.println(tempCliente.getNombres());
         selectedDireccion = tempCliente.getDireccionId();
         selectedCiudad = tempCliente.getDireccionId().getCiudadId();
@@ -181,82 +180,104 @@ public class AdministrarClientesView implements Serializable{
         // Se cargan las tiendas de esa direccion
         //tiendas = selectedDireccion.getTiendaList();
         selectedTienda = tempCliente.getTiendaId();
-        
+
     }
-    
-    public void onTipoSelect(){
+
+    public void onTipoSelect() {
         System.out.println(tempCliente.getTipoList());
     }
-    
-    public void onPaisSelect(){
+
+    public void onPaisSelect() {
         BigDecimal paisId = selectedPais.getPaisId();
         // Se verfica que no este null
-        if(paisId != null){
+        if (paisId != null) {
             selectedPais = paisFacade.find(paisId);
         }
+        // Se limpia la ciudad y direccion
+        selectedCiudad = new Ciudad();
+        selectedDireccion = new Direccion();
     }
-    
-    public void onCiudadSelect(){
+
+    public void onCiudadSelect() {
         BigDecimal ciudadId = selectedCiudad.getCiudadId();
         // Se verfica que no este null
-        if(ciudadId != null){
+        if (ciudadId != null) {
             selectedCiudad = ciudadFacade.find(ciudadId);
         }
+        // Se limpia la direccion
+        selectedDireccion = new Direccion();
     }
-    
-    public void onDireccionSelect(){
+
+    public void onDireccionSelect() {
         BigDecimal direccionId = selectedDireccion.getDireccionId();
         // Se verfica que no este null
-        if(direccionId != null){
+        if (direccionId != null) {
             selectedDireccion = direccionFacade.find(direccionId);
             //tiendas = selectedDireccion.getTiendaList();
         }
     }
-    
-    public void onTiendaSelect(){
+
+    public void onTiendaSelect() {
         BigDecimal tiendaId = selectedTienda.getTiendaId();
         // Se verfica que no este null
-        if(tiendaId != null){
+        if (tiendaId != null) {
             selectedTienda = tiendaFacade.find(tiendaId);
         }
     }
-    
-    public void buscar(){
+
+    public void buscar() {
         System.out.println("Buscando cliente " + tempCliente.getNombres());
     }
-    
-    public void registrar(){
+
+    public void registrar() {
         // Se obtiene la lista del TIPO de cliente y se le retira del objeto
         // Se retira porque es una entidad o table separada
         // Primero debe persistir el cliente y luego el tipo de Cliente
         List<Tipo> tipoList = tempCliente.getTipoList();
         tempCliente.setTipoList(null);
-        
+
         // Se crea al cliente
         tempCliente.setActivo(1);
         tempCliente.setTiendaId(selectedTienda);
         tempCliente.setFechaCreacion(new Date());
         tempCliente.setDireccionId(selectedDireccion);
         tempCliente = clienteFacade.createObId(tempCliente);
-        
+
         // Se crean los tipos acorde al cliente
         for (Tipo tipo : tipoList) {
             tempCliente.getTipoList().add(tipo);
         }
-        
+
         // Se edita para los tipos que posee
         clienteFacade.edit(tempCliente);
-        
+
         // Se actualiza la tabla principal
         updateTable();
     }
-    
-    public void eliminar(){
-        System.out.println("Buscando cliente " + tempCliente.getNombres());
+
+    public void eliminar() {
+        // Se obtiene el id del cliente para eliminar
+        BigDecimal clienteId = tempCliente.getClienteId();
+        if (clienteId != null) {
+            clienteFacade.remove(tempCliente);
+        }
+        // Se actualiza la tabla principal
+        updateTable();
     }
-    
-    public void editar(){
-        System.out.println("Buscando cliente " + tempCliente.getNombres());
+
+    public void editar() {
+        // Se obtiene el id del cliente para eliminar
+        BigDecimal clienteId = tempCliente.getClienteId();
+
+        if (clienteId != null) {
+            // Se guardan relaciones externas
+            tempCliente.setTiendaId(selectedTienda);
+            tempCliente.setDireccionId(selectedDireccion);
+            // Se edita
+            clienteFacade.edit(tempCliente);
+        }
+        // Se actualiza la tabla principal
+        updateTable();
     }
-    
+
 }

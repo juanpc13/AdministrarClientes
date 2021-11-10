@@ -41,7 +41,7 @@
 
                             <div class="p-field p-col-12 p-md-12">
                                 <p:outputLabel value="ID"/>
-                                <p:inputText id="idCliente" value="#{administrarClientesView.tempCliente.clienteId == null ? '~': administrarClientesView.tempCliente.clienteId}" disabled="true"/>
+                                <p:inputText id="idCliente" value="#{administrarClientesView.tempCliente.clienteId}" disabled="true"/>
                             </div>
 
                             <div class="p-field p-col-12 p-md-12">
@@ -67,7 +67,7 @@
                             <div class="p-field p-col-12 p-md-12">
                                 <p:outputLabel value="Pais"/>
                                 <p:selectOneMenu id="pais" value="#{administrarClientesView.selectedPais.paisId}">
-                                    <p:ajax event="itemSelect" listener="#{administrarClientesView.onPaisSelect}" update="ciudad" />
+                                    <p:ajax event="itemSelect" listener="#{administrarClientesView.onPaisSelect}" update="ciudad, direccion" />
                                     <f:selectItem itemLabel="Seleccionar Pais" itemValue="" noSelectionOption="true"/>
                                     <f:selectItems value="#{administrarClientesView.paises}" var="pais" itemLabel="#{pais.pais}" itemValue="#{pais.paisId}"/>
                                 </p:selectOneMenu>
@@ -102,9 +102,9 @@
 
                             <p:commandButton value="Limpiar" styleClass="ui-button-secondary" update="datosCliente" action="#{administrarClientesView.limpiarVista}" />
                             <p:commandButton value="Buscar" styleClass="ui-button-danger" update="datosCliente" action="#{administrarClientesView.buscar}" />
-                            <p:commandButton value="Editar" styleClass="ui-button-secondary" update="datosCliente" disabled="#{administrarClientesView.tempCliente.clienteId == null}" action="#{administrarClientesView.editar}" />
-                            <p:commandButton value="Eliminar" styleClass="ui-button-danger" update="datosCliente" disabled="#{administrarClientesView.tempCliente.clienteId == null}" action="#{administrarClientesView.eliminar}" />
-                            <p:commandButton value="Registrar" styleClass="ui-button-secondary" update="datosCliente, clientes:tabla" disabled="#{administrarClientesView.tempCliente.clienteId != null}" action="#{administrarClientesView.registrar}" />                            
+                            <p:commandButton value="Editar" styleClass="ui-button-secondary" update="datosCliente, clientes:tabla" disabled="#{administrarClientesView.tempCliente.clienteId == null}" action="#{administrarClientesView.editar}" />
+                            <p:commandButton value="Eliminar" styleClass="ui-button-danger" update="datosCliente, clientes:tabla" disabled="#{administrarClientesView.tempCliente.clienteId == null}" action="#{administrarClientesView.eliminar}" />
+                            <p:commandButton value="Registrar" styleClass="ui-button-secondary" update="datosCliente, clientes:tabla" disabled="#{administrarClientesView.tempCliente.clienteId != null}" action="#{administrarClientesView.registrar}" />
 
                         </h:form>
 
