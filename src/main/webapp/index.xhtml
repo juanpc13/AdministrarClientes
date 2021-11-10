@@ -94,6 +94,7 @@
                             <div class="p-field p-col-12 p-md-12">
                                 <p:outputLabel value="Tienda"/>
                                 <p:selectOneMenu id="tienda" value="#{administrarClientesView.selectedTienda.tiendaId}">
+                                    <p:ajax event="itemSelect" listener="#{administrarClientesView.onTiendaSelect}" update="tienda" />
                                     <f:selectItem itemLabel="Seleccionar Tienda" itemValue="" noSelectionOption="true"/>
                                     <f:selectItems value="#{administrarClientesView.tiendas}" var="tienda" itemLabel="#{tienda.nombre}" itemValue="#{tienda.tiendaId}"/>
                                 </p:selectOneMenu>
@@ -135,6 +136,10 @@
 
                             <p:column headerText="Tienda">
                                 <h:outputText value="#{cliente.tiendaId.nombre}" />
+                            </p:column>
+                            
+                            <p:column headerText="Creado">
+                                <h:outputText value="#{cliente.fechaCreacionTXT}" />
                             </p:column>
 
                         </p:dataTable>

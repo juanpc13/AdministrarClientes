@@ -213,6 +213,14 @@ public class AdministrarClientesView implements Serializable{
         }
     }
     
+    public void onTiendaSelect(){
+        BigDecimal tiendaId = selectedTienda.getTiendaId();
+        // Se verfica que no este null
+        if(tiendaId != null){
+            selectedTienda = tiendaFacade.find(tiendaId);
+        }
+    }
+    
     public void buscar(){
         System.out.println("Buscando cliente " + tempCliente.getNombres());
     }
@@ -236,6 +244,10 @@ public class AdministrarClientesView implements Serializable{
             tempCliente.getTipoList().add(tipo);
         }
         
+        // Se edita para los tipos que posee
+        clienteFacade.edit(tempCliente);
+        
+        // Se actualiza la tabla principal
         updateTable();
     }
     

@@ -7,6 +7,7 @@ package ues.edu.sv.administrarclientes.entidades;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -161,6 +162,14 @@ public class Cliente implements Serializable {
 
     public void setTiendaId(Tienda tiendaId) {
         this.tiendaId = tiendaId;
+    }
+    
+    public String getFechaCreacionTXT(){
+        if(this.fechaCreacion == null){
+            return "";
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MMM/yyyy hh:mm a");
+        return formatter.format(this.fechaCreacion);
     }
 
     @Override
